@@ -46,7 +46,7 @@ jobs:
           try {
             const archive = path.join(temp, "native.tgz");
             await Bun.write(archive, bytes);
-            const unpack = Bun.spawn(["tar", "-xzf", archive, "-C", temp], { stdout: "inherit", stderr: "inherit" });
+            const unpack = Bun.spawn(["tar", "-xzf", "native.tgz"], { cwd: temp, stdout: "inherit", stderr: "inherit" });
             if (await unpack.exited !== 0) throw new Error("Native extraction failed");
             const source = path.join(temp, "package");
             for (const filename of await fs.readdir(source)) {
